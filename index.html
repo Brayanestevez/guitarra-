@@ -1,236 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evolución de la Guitarra — UNAD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1008; font-family: 'Crimson Pro', serif; color: #f0e6c8; min-height: 100vh; }
+    .page { max-width: 960px; margin: 0 auto; padding: 40px 30px; }
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+    .header { text-align: center; margin-bottom: 60px; }
+    .curso-badge {
+      display: inline-block; background: #241a0c; border: 1px solid #c8922a;
+      color: #c8922a; font-size: 12px; padding: 5px 16px; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .header h1 { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 900; line-height: 1.1; }
+    .header h1 span { color: #c8922a; }
+    .header p { margin-top: 10px; font-size: 16px; font-style: italic; color: #a08c6e; letter-spacing: 2px; text-transform: uppercase; }
+    .divider { display: flex; align-items: center; gap: 16px; margin: 20px auto; width: 400px; }
+    .divider::before { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, #c8922a); }
+    .divider::after  { content: ''; flex: 1; height: 1px; background: linear-gradient(to left,  transparent, #c8922a); }
+    .divider-icon { color: #c8922a; font-size: 18px; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    .timeline { position: relative; padding: 20px 0; }
+    .timeline::before {
+      content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+      top: 0; bottom: 0; width: 2px;
+      background: linear-gradient(to bottom, transparent, #c8922a 10%, #c8922a 90%, transparent);
+    }
 
-  body {
-    background: #1a1008;
-    font-family: 'Crimson Pro', serif;
-    color: #f0e6c8;
-    min-height: 100vh;
-  }
+    .event {
+      display: flex; align-items: flex-start; margin-bottom: 44px;
+      position: relative; animation: fadeIn 0.7s ease forwards; opacity: 0;
+    }
+    .event:nth-child(1)  { animation-delay: 0.1s; }
+    .event:nth-child(2)  { animation-delay: 0.2s; }
+    .event:nth-child(3)  { animation-delay: 0.3s; }
+    .event:nth-child(4)  { animation-delay: 0.4s; }
+    .event:nth-child(5)  { animation-delay: 0.5s; }
+    .event:nth-child(6)  { animation-delay: 0.6s; }
+    .event:nth-child(7)  { animation-delay: 0.7s; }
+    .event:nth-child(8)  { animation-delay: 0.8s; }
+    .event:nth-child(9)  { animation-delay: 0.9s; }
+    .event:nth-child(10) { animation-delay: 1.0s; }
 
-  .page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 30px;
-    position: relative;
-  }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
-  .header {
-    text-align: center;
-    margin-bottom: 60px;
-    position: relative;
-  }
+    .event.left  { flex-direction: row-reverse; }
+    .event.right { flex-direction: row; }
 
-  .header::before {
-    content: '♩';
-    font-size: 80px;
-    color: #c8922a;
-    opacity: 0.15;
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+    .event-content {
+      width: calc(50% - 50px);
+      background: #241a0c; border: 1px solid #3d2e14; border-radius: 6px;
+      overflow: hidden; position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .event-content:hover { border-color: #c8922a; transform: translateY(-4px); }
 
-  .header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 900;
-    color: #f0e6c8;
-    line-height: 1.1;
-    letter-spacing: -1px;
-  }
+    .event.left  .event-content { margin-right: 50px; }
+    .event.right .event-content { margin-left: 50px; }
 
-  .header h1 span {
-    color: #c8922a;
-  }
+    .event.left .event-content::after {
+      content: ''; position: absolute; right: -9px; top: 24px;
+      border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+      border-left: 9px solid #3d2e14;
+    }
+    .event.right .event-content::after {
+      content: ''; position: absolute; left: -9px; top: 24px;
+      border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+      border-right: 9px solid #3d2e14;
+    }
 
-  .header p {
-    margin-top: 10px;
-    font-size: 16px;
-    font-style: italic;
-    color: #a08c6e;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
+    .event-img {
+      width: 100%; height: 160px; object-fit: cover;
+      display: block; filter: sepia(30%) brightness(0.85);
+      transition: filter 0.3s;
+    }
+    .event-content:hover .event-img { filter: sepia(10%) brightness(1); }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 20px auto;
-    width: 400px;
-  }
+    .event-img-placeholder {
+      width: 100%; height: 160px;
+      background: #2e1f0a;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; color: #c8922a; opacity: 0.4;
+    }
 
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #c8922a);
-  }
-  .divider::after { background: linear-gradient(to left, transparent, #c8922a); }
+    .event-body { padding: 18px 20px; }
+    .event.left .event-body { text-align: right; }
 
-  .divider-icon { color: #c8922a; font-size: 18px; }
+    .event-year {
+      font-family: 'Playfair Display', serif; font-size: 22px;
+      font-weight: 700; color: #c8922a; margin-bottom: 5px;
+    }
+    .event-title {
+      font-family: 'Playfair Display', serif; font-size: 15px;
+      font-weight: 700; color: #f0e6c8; margin-bottom: 8px; line-height: 1.3;
+    }
+    .event-desc { font-size: 14px; color: #a08c6e; line-height: 1.6; font-weight: 300; }
 
-  /* Timeline */
-  .timeline {
-    position: relative;
-    padding: 20px 0;
-  }
+    .event-dot {
+      position: absolute; left: 50%; transform: translateX(-50%); top: 22px;
+      width: 18px; height: 18px; background: #c8922a; border-radius: 50%;
+      border: 3px solid #1a1008; z-index: 2;
+      box-shadow: 0 0 14px rgba(200,146,42,0.6);
+    }
 
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, transparent, #c8922a 10%, #c8922a 90%, transparent);
-  }
+    .img-caption {
+      font-size: 11px; color: #5a4a30; padding: 4px 10px 8px;
+      font-style: italic; text-align: center;
+    }
 
-  .event {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 40px;
-    position: relative;
-    animation: fadeIn 0.6s ease forwards;
-    opacity: 0;
-  }
+    .footer { text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #3d2e14; }
+    .footer p { font-size: 13px; color: #6b5a40; font-style: italic; letter-spacing: 1px; }
 
-  .event:nth-child(1)  { animation-delay: 0.1s; }
-  .event:nth-child(2)  { animation-delay: 0.2s; }
-  .event:nth-child(3)  { animation-delay: 0.3s; }
-  .event:nth-child(4)  { animation-delay: 0.4s; }
-  .event:nth-child(5)  { animation-delay: 0.5s; }
-  .event:nth-child(6)  { animation-delay: 0.6s; }
-  .event:nth-child(7)  { animation-delay: 0.7s; }
-  .event:nth-child(8)  { animation-delay: 0.8s; }
-  .event:nth-child(9)  { animation-delay: 0.9s; }
-  .event:nth-child(10) { animation-delay: 1.0s; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .event.left  { flex-direction: row-reverse; }
-  .event.right { flex-direction: row; }
-
-  .event-content {
-    width: calc(50% - 50px);
-    background: #241a0c;
-    border: 1px solid #3d2e14;
-    border-radius: 4px;
-    padding: 20px 22px;
-    position: relative;
-    transition: border-color 0.3s;
-  }
-
-  .event-content:hover {
-    border-color: #c8922a;
-  }
-
-  .event.left  .event-content { margin-right: 50px; text-align: right; }
-  .event.right .event-content { margin-left: 50px; }
-
-  .event.left  .event-content::after {
-    content: '';
-    position: absolute;
-    right: -9px;
-    top: 20px;
-    width: 0; height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 9px solid #3d2e14;
-  }
-
-  .event.right .event-content::after {
-    content: '';
-    position: absolute;
-    left: -9px;
-    top: 20px;
-    width: 0; height: 0;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right: 9px solid #3d2e14;
-  }
-
-  .event-dot {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 18px;
-    width: 18px;
-    height: 18px;
-    background: #c8922a;
-    border-radius: 50%;
-    border: 3px solid #1a1008;
-    z-index: 2;
-    box-shadow: 0 0 12px rgba(200,146,42,0.5);
-  }
-
-  .event-year {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #c8922a;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .event-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: #f0e6c8;
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-
-  .event-desc {
-    font-size: 14px;
-    color: #a08c6e;
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .event-icon {
-    font-size: 20px;
-    margin-bottom: 6px;
-    display: block;
-  }
-
-  .footer {
-    text-align: center;
-    margin-top: 50px;
-    padding-top: 30px;
-    border-top: 1px solid #3d2e14;
-  }
-
-  .footer p {
-    font-size: 13px;
-    color: #6b5a40;
-    font-style: italic;
-    letter-spacing: 1px;
-  }
-
-  .curso-badge {
-    display: inline-block;
-    background: #241a0c;
-    border: 1px solid #c8922a;
-    color: #c8922a;
-    font-size: 12px;
-    padding: 5px 16px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-</style>
-
+    @media (max-width: 650px) {
+      .timeline::before { left: 20px; }
+      .event, .event.left { flex-direction: column; padding-left: 50px; }
+      .event-content, .event.left .event-content { width: 100%; margin: 0; }
+      .event.left .event-body { text-align: left; }
+      .event-dot { left: 20px; }
+      .event.left .event-content::after, .event.right .event-content::after { display: none; }
+      .header h1 { font-size: 28px; }
+      .divider { width: 100%; }
+    }
+  </style>
+</head>
+<body>
 <div class="page">
   <div class="header">
     <div class="curso-badge">UNAD · Curso de Guitarra · Código 80005</div>
@@ -244,90 +142,130 @@
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">Siglo XIII</div>
-        <div class="event-title">El laúd árabe llega a España</div>
-        <div class="event-desc">Los árabes trajeron el oud a la Península Ibérica. Este instrumento de cuerdas pulsadas es uno de los antepasados directos de la guitarra moderna.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Oud_p1130862.jpg/640px-Oud_p1130862.jpg" alt="Laúd árabe (oud)" onerror="this.style.display='none'">
+        <div class="img-caption">Laúd árabe (oud), antecesor de la guitarra</div>
+        <div class="event-body">
+          <div class="event-year">Siglo XIII</div>
+          <div class="event-title">El laúd árabe llega a España</div>
+          <div class="event-desc">Los árabes trajeron el oud a la Península Ibérica. Este instrumento de cuerdas pulsadas es uno de los antepasados directos de la guitarra moderna.</div>
+        </div>
       </div>
     </div>
 
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">Siglo XV</div>
-        <div class="event-title">La guitarra medieval de 4 órdenes</div>
-        <div class="event-desc">Surge en Europa la "guitarra latina", pequeña y con 4 pares de cuerdas. Se tocaba con plectro y era usada para música popular y danzas.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Guitar_history_300.jpg/640px-Guitar_history_300.jpg" alt="Guitarra medieval" onerror="this.style.display='none'">
+        <div class="img-caption">Representación de guitarra medieval, siglo XV</div>
+        <div class="event-body">
+          <div class="event-year">Siglo XV</div>
+          <div class="event-title">La guitarra medieval de 4 órdenes</div>
+          <div class="event-desc">Surge en Europa la "guitarra latina", pequeña y con 4 pares de cuerdas. Se tocaba con plectro y era usada para música popular y danzas.</div>
+        </div>
       </div>
     </div>
 
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">Ca. 1550</div>
-        <div class="event-title">Guitarra renacentista de 5 órdenes</div>
-        <div class="event-desc">Se añade un quinto orden de cuerdas. La guitarra gana popularidad en España, Francia e Italia, desplazando al laúd entre los músicos comunes.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Guitar_rennaisance.jpg/640px-Guitar_rennaisance.jpg" alt="Guitarra renacentista" onerror="this.style.display='none'">
+        <div class="img-caption">Guitarra renacentista de 5 órdenes, siglo XVI</div>
+        <div class="event-body">
+          <div class="event-year">Ca. 1550</div>
+          <div class="event-title">Guitarra renacentista de 5 órdenes</div>
+          <div class="event-desc">Se añade un quinto orden de cuerdas. La guitarra gana popularidad en España, Francia e Italia, desplazando al laúd entre los músicos comunes.</div>
+        </div>
       </div>
     </div>
 
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">1674</div>
-        <div class="event-title">Francesco Corbetta y la guitarra barroca</div>
-        <div class="event-desc">Corbetta publica "La Guitarre Royale", consolidando la guitarra barroca en las cortes europeas. El instrumento se convierte en símbolo de elegancia.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Baroque_guitar_Voboam_1676.jpg/480px-Baroque_guitar_Voboam_1676.jpg" alt="Guitarra barroca" onerror="this.style.display='none'">
+        <div class="img-caption">Guitarra barroca, siglo XVII</div>
+        <div class="event-body">
+          <div class="event-year">1674</div>
+          <div class="event-title">Francesco Corbetta y la guitarra barroca</div>
+          <div class="event-desc">Corbetta publica "La Guitarre Royale", consolidando la guitarra barroca en las cortes europeas. El instrumento se convierte en símbolo de elegancia.</div>
+        </div>
       </div>
     </div>
 
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">Ca. 1780</div>
-        <div class="event-title">Guitarra clásica de 6 cuerdas</div>
-        <div class="event-desc">Se estandariza la guitarra de 6 cuerdas simples que conocemos hoy. Se establece la afinación moderna: Mi La Re Sol Si Mi.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/GuitareClassique5.png/480px-GuitareClassique5.png" alt="Guitarra clásica 6 cuerdas" onerror="this.style.display='none'">
+        <div class="img-caption">Guitarra clásica de 6 cuerdas, fin siglo XVIII</div>
+        <div class="event-body">
+          <div class="event-year">Ca. 1780</div>
+          <div class="event-title">Guitarra clásica de 6 cuerdas</div>
+          <div class="event-desc">Se estandariza la guitarra de 6 cuerdas simples que conocemos hoy. Se establece la afinación moderna: Mi La Re Sol Si Mi.</div>
+        </div>
       </div>
     </div>
 
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">1808</div>
-        <div class="event-title">Fernando Sor, "el Beethoven de la guitarra"</div>
-        <div class="event-desc">El compositor español eleva la guitarra al nivel de instrumento de concierto, componiendo estudios y sonatas que siguen siendo referencia hoy.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Fernando_sor.jpg/480px-Fernando_sor.jpg" alt="Fernando Sor" onerror="this.style.display='none'">
+        <div class="img-caption">Fernando Sor (1778–1839), compositor español</div>
+        <div class="event-body">
+          <div class="event-year">1808</div>
+          <div class="event-title">Fernando Sor, "el Beethoven de la guitarra"</div>
+          <div class="event-desc">El compositor español eleva la guitarra al nivel de instrumento de concierto, componiendo estudios y sonatas que siguen siendo referencia hoy.</div>
+        </div>
       </div>
     </div>
 
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">1850</div>
-        <div class="event-title">Antonio de Torres revoluciona la luthería</div>
-        <div class="event-desc">Torres agranda el cuerpo, introduce el varillaje en abanico y establece los estándares de construcción que se siguen usando hasta hoy en la guitarra clásica.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Torres_guitar_1859.jpg/480px-Torres_guitar_1859.jpg" alt="Guitarra de Torres" onerror="this.style.display='none'">
+        <div class="img-caption">Guitarra construida por Antonio de Torres, 1859</div>
+        <div class="event-body">
+          <div class="event-year">1850</div>
+          <div class="event-title">Antonio de Torres revoluciona la luthería</div>
+          <div class="event-desc">Torres agranda el cuerpo, introduce el varillaje en abanico y establece los estándares de construcción que se siguen usando hasta hoy en la guitarra clásica.</div>
+        </div>
       </div>
     </div>
 
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">1936</div>
-        <div class="event-title">Nace la guitarra eléctrica (Gibson ES-150)</div>
-        <div class="event-desc">Gibson lanza la primera guitarra eléctrica exitosa comercialmente. Esto transforma la música popular y abre el camino al jazz, blues y rock.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/thirty/GibsonES150.jpg/480px-GibsonES150.jpg" alt="Gibson ES-150" onerror="this.style.display='none'">
+        <div class="img-caption">Gibson ES-150, primera guitarra eléctrica exitosa</div>
+        <div class="event-body">
+          <div class="event-year">1936</div>
+          <div class="event-title">Nace la guitarra eléctrica (Gibson ES-150)</div>
+          <div class="event-desc">Gibson lanza la primera guitarra eléctrica exitosa comercialmente. Esto transforma la música popular y abre el camino al jazz, blues y rock.</div>
+        </div>
       </div>
     </div>
 
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">1950</div>
-        <div class="event-title">Fender Telecaster: cuerpo sólido</div>
-        <div class="event-desc">Leo Fender lanza la primera guitarra eléctrica de producción masiva con cuerpo sólido. Cambia para siempre el sonido de la música popular mundial.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fender_Telecaster%2C_YM-G1%2C_front.jpg/480px-Fender_Telecaster%2C_YM-G1%2C_front.jpg" alt="Fender Telecaster" onerror="this.style.display='none'">
+        <div class="img-caption">Fender Telecaster (1950), cuerpo sólido</div>
+        <div class="event-body">
+          <div class="event-year">1950</div>
+          <div class="event-title">Fender Telecaster: cuerpo sólido</div>
+          <div class="event-desc">Leo Fender lanza la primera guitarra eléctrica de producción masiva con cuerpo sólido. Cambia para siempre el sonido de la música popular mundial.</div>
+        </div>
       </div>
     </div>
 
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <div class="event-year">1954 – Hoy</div>
-        <div class="event-title">La guitarra conquista el mundo</div>
-        <div class="event-desc">La Fender Stratocaster y la Gibson Les Paul se vuelven íconos. Artistas como Hendrix, Santana y Van Halen la llevan a nuevos límites. Hoy es el instrumento más popular del planeta.</div>
+        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Jimi-Hendrix-1967-Helsinki.jpg/480px-Jimi-Hendrix-1967-Helsinki.jpg" alt="Jimi Hendrix" onerror="this.style.display='none'">
+        <div class="img-caption">Jimi Hendrix, ícono de la guitarra eléctrica moderna</div>
+        <div class="event-body">
+          <div class="event-year">1954 – Hoy</div>
+          <div class="event-title">La guitarra conquista el mundo</div>
+          <div class="event-desc">La Fender Stratocaster y la Gibson Les Paul se vuelven íconos. Artistas como Hendrix, Santana y Van Halen la llevan a nuevos límites. Hoy es el instrumento más popular del planeta.</div>
+        </div>
       </div>
     </div>
 
@@ -338,3 +276,5 @@
     <p style="margin-top:6px">Curso: Guitarra — Código 80005 &nbsp;·&nbsp; Ruta A — Línea del tiempo</p>
   </div>
 </div>
+</body>
+</html>
