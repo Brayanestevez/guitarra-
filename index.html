@@ -22,7 +22,7 @@
     .header p { margin-top: 10px; font-size: 16px; font-style: italic; color: #a08c6e; letter-spacing: 2px; text-transform: uppercase; }
     .divider { display: flex; align-items: center; gap: 16px; margin: 20px auto; width: 400px; }
     .divider::before { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, #c8922a); }
-    .divider::after  { content: ''; flex: 1; height: 1px; background: linear-gradient(to left,  transparent, #c8922a); }
+    .divider::after  { content: ''; flex: 1; height: 1px; background: linear-gradient(to left, transparent, #c8922a); }
     .divider-icon { color: #c8922a; font-size: 18px; }
 
     .timeline { position: relative; padding: 20px 0; }
@@ -59,7 +59,6 @@
       transition: border-color 0.3s, transform 0.3s;
     }
     .event-content:hover { border-color: #c8922a; transform: translateY(-4px); }
-
     .event.left  .event-content { margin-right: 50px; }
     .event.right .event-content { margin-left: 50px; }
 
@@ -74,31 +73,30 @@
       border-right: 9px solid #3d2e14;
     }
 
+    .event-img-wrap { width: 100%; height: 160px; overflow: hidden; background: #2e1f0a; position: relative; }
     .event-img {
-      width: 100%; height: 160px; object-fit: cover;
-      display: block; filter: sepia(30%) brightness(0.85);
-      transition: filter 0.3s;
+      width: 100%; height: 100%; object-fit: cover;
+      filter: sepia(20%) brightness(0.9);
+      transition: filter 0.3s, transform 0.3s;
+      display: block;
     }
-    .event-content:hover .event-img { filter: sepia(10%) brightness(1); }
+    .event-content:hover .event-img { filter: sepia(0%) brightness(1.05); transform: scale(1.03); }
 
-    .event-img-placeholder {
-      width: 100%; height: 160px;
-      background: #2e1f0a;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px; color: #c8922a; opacity: 0.4;
+    .img-fallback {
+      display: none; width: 100%; height: 160px;
+      background: #2e1f0a; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
     }
+    .img-fallback span { font-size: 40px; opacity: 0.5; }
+    .img-fallback p { font-size: 12px; color: #6b5a40; font-style: italic; }
 
-    .event-body { padding: 18px 20px; }
+    .img-caption { font-size: 11px; color: #5a4a30; padding: 4px 10px 0; font-style: italic; text-align: center; }
+
+    .event-body { padding: 14px 20px 18px; }
     .event.left .event-body { text-align: right; }
 
-    .event-year {
-      font-family: 'Playfair Display', serif; font-size: 22px;
-      font-weight: 700; color: #c8922a; margin-bottom: 5px;
-    }
-    .event-title {
-      font-family: 'Playfair Display', serif; font-size: 15px;
-      font-weight: 700; color: #f0e6c8; margin-bottom: 8px; line-height: 1.3;
-    }
+    .event-year { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: #c8922a; margin-bottom: 5px; }
+    .event-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #f0e6c8; margin-bottom: 8px; line-height: 1.3; }
     .event-desc { font-size: 14px; color: #a08c6e; line-height: 1.6; font-weight: 300; }
 
     .event-dot {
@@ -106,11 +104,6 @@
       width: 18px; height: 18px; background: #c8922a; border-radius: 50%;
       border: 3px solid #1a1008; z-index: 2;
       box-shadow: 0 0 14px rgba(200,146,42,0.6);
-    }
-
-    .img-caption {
-      font-size: 11px; color: #5a4a30; padding: 4px 10px 8px;
-      font-style: italic; text-align: center;
     }
 
     .footer { text-align: center; margin-top: 50px; padding-top: 30px; border-top: 1px solid #3d2e14; }
@@ -139,11 +132,14 @@
 
   <div class="timeline">
 
+    <!-- 1 -->
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Oud_p1130862.jpg/640px-Oud_p1130862.jpg" alt="Laúd árabe (oud)" onerror="this.style.display='none'">
-        <div class="img-caption">Laúd árabe (oud), antecesor de la guitarra</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://images.metmuseum.org/CRDImages/mi/original/DP251139.jpg" alt="Laúd árabe">
+        </div>
+        <div class="img-caption">Laúd árabe (oud) — antecesor de la guitarra</div>
         <div class="event-body">
           <div class="event-year">Siglo XIII</div>
           <div class="event-title">El laúd árabe llega a España</div>
@@ -152,11 +148,14 @@
       </div>
     </div>
 
+    <!-- 2 -->
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Guitar_history_300.jpg/640px-Guitar_history_300.jpg" alt="Guitarra medieval" onerror="this.style.display='none'">
-        <div class="img-caption">Representación de guitarra medieval, siglo XV</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://images.metmuseum.org/CRDImages/mi/original/DP251585.jpg" alt="Guitarra medieval">
+        </div>
+        <div class="img-caption">Guitarra medieval de 4 órdenes, siglo XV</div>
         <div class="event-body">
           <div class="event-year">Siglo XV</div>
           <div class="event-title">La guitarra medieval de 4 órdenes</div>
@@ -165,10 +164,13 @@
       </div>
     </div>
 
+    <!-- 3 -->
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Guitar_rennaisance.jpg/640px-Guitar_rennaisance.jpg" alt="Guitarra renacentista" onerror="this.style.display='none'">
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://images.metmuseum.org/CRDImages/mi/original/DP251586.jpg" alt="Guitarra renacentista">
+        </div>
         <div class="img-caption">Guitarra renacentista de 5 órdenes, siglo XVI</div>
         <div class="event-body">
           <div class="event-year">Ca. 1550</div>
@@ -178,10 +180,13 @@
       </div>
     </div>
 
+    <!-- 4 -->
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Baroque_guitar_Voboam_1676.jpg/480px-Baroque_guitar_Voboam_1676.jpg" alt="Guitarra barroca" onerror="this.style.display='none'">
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://images.metmuseum.org/CRDImages/mi/original/DP251143.jpg" alt="Guitarra barroca">
+        </div>
         <div class="img-caption">Guitarra barroca, siglo XVII</div>
         <div class="event-body">
           <div class="event-year">1674</div>
@@ -191,24 +196,30 @@
       </div>
     </div>
 
+    <!-- 5 -->
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/GuitareClassique5.png/480px-GuitareClassique5.png" alt="Guitarra clásica 6 cuerdas" onerror="this.style.display='none'">
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://images.metmuseum.org/CRDImages/mi/original/DP251144.jpg" alt="Guitarra clásica 6 cuerdas">
+        </div>
         <div class="img-caption">Guitarra clásica de 6 cuerdas, fin siglo XVIII</div>
         <div class="event-body">
           <div class="event-year">Ca. 1780</div>
           <div class="event-title">Guitarra clásica de 6 cuerdas</div>
-          <div class="event-desc">Se estandariza la guitarra de 6 cuerdas simples que conocemos hoy. Se establece la afinación moderna: Mi La Re Sol Si Mi.</div>
+          <div class="event-desc">Se estandariza la guitarra de 6 cuerdas simples. Se establece la afinación moderna: Mi La Re Sol Si Mi.</div>
         </div>
       </div>
     </div>
 
+    <!-- 6 -->
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Fernando_sor.jpg/480px-Fernando_sor.jpg" alt="Fernando Sor" onerror="this.style.display='none'">
-        <div class="img-caption">Fernando Sor (1778–1839), compositor español</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Fernando_sor.jpg" alt="Fernando Sor">
+        </div>
+        <div class="img-caption">Fernando Sor (1778–1839)</div>
         <div class="event-body">
           <div class="event-year">1808</div>
           <div class="event-title">Fernando Sor, "el Beethoven de la guitarra"</div>
@@ -217,37 +228,46 @@
       </div>
     </div>
 
+    <!-- 7 -->
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Torres_guitar_1859.jpg/480px-Torres_guitar_1859.jpg" alt="Guitarra de Torres" onerror="this.style.display='none'">
-        <div class="img-caption">Guitarra construida por Antonio de Torres, 1859</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Antonio_de_Torres_guitar_1864.jpg/440px-Antonio_de_Torres_guitar_1864.jpg" alt="Guitarra Torres">
+        </div>
+        <div class="img-caption">Guitarra construida por Antonio de Torres, 1864</div>
         <div class="event-body">
           <div class="event-year">1850</div>
           <div class="event-title">Antonio de Torres revoluciona la luthería</div>
-          <div class="event-desc">Torres agranda el cuerpo, introduce el varillaje en abanico y establece los estándares de construcción que se siguen usando hasta hoy en la guitarra clásica.</div>
+          <div class="event-desc">Torres agranda el cuerpo e introduce el varillaje en abanico, estándares de construcción que se siguen usando hasta hoy.</div>
         </div>
       </div>
     </div>
 
+    <!-- 8 -->
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/thirty/GibsonES150.jpg/480px-GibsonES150.jpg" alt="Gibson ES-150" onerror="this.style.display='none'">
-        <div class="img-caption">Gibson ES-150, primera guitarra eléctrica exitosa</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/1936_Gibson_ES-150.jpg/440px-1936_Gibson_ES-150.jpg" alt="Gibson ES-150 1936">
+        </div>
+        <div class="img-caption">Gibson ES-150, primera guitarra eléctrica exitosa (1936)</div>
         <div class="event-body">
           <div class="event-year">1936</div>
           <div class="event-title">Nace la guitarra eléctrica (Gibson ES-150)</div>
-          <div class="event-desc">Gibson lanza la primera guitarra eléctrica exitosa comercialmente. Esto transforma la música popular y abre el camino al jazz, blues y rock.</div>
+          <div class="event-desc">Gibson lanza la primera guitarra eléctrica exitosa comercialmente. Transforma la música popular y abre el camino al jazz, blues y rock.</div>
         </div>
       </div>
     </div>
 
+    <!-- 9 -->
     <div class="event left">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fender_Telecaster%2C_YM-G1%2C_front.jpg/480px-Fender_Telecaster%2C_YM-G1%2C_front.jpg" alt="Fender Telecaster" onerror="this.style.display='none'">
-        <div class="img-caption">Fender Telecaster (1950), cuerpo sólido</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fender_Telecaster%2C_YM-G1%2C_front.jpg/440px-Fender_Telecaster%2C_YM-G1%2C_front.jpg" alt="Fender Telecaster 1950">
+        </div>
+        <div class="img-caption">Fender Telecaster (1950) — primer cuerpo sólido</div>
         <div class="event-body">
           <div class="event-year">1950</div>
           <div class="event-title">Fender Telecaster: cuerpo sólido</div>
@@ -256,15 +276,18 @@
       </div>
     </div>
 
+    <!-- 10 -->
     <div class="event right">
       <div class="event-dot"></div>
       <div class="event-content">
-        <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Jimi-Hendrix-1967-Helsinki.jpg/480px-Jimi-Hendrix-1967-Helsinki.jpg" alt="Jimi Hendrix" onerror="this.style.display='none'">
-        <div class="img-caption">Jimi Hendrix, ícono de la guitarra eléctrica moderna</div>
+        <div class="event-img-wrap">
+          <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Fender_Stratocaster_with_Floyd_Rose.jpg/440px-Fender_Stratocaster_with_Floyd_Rose.jpg" alt="Fender Stratocaster">
+        </div>
+        <div class="img-caption">Fender Stratocaster (1954) — ícono mundial</div>
         <div class="event-body">
           <div class="event-year">1954 – Hoy</div>
           <div class="event-title">La guitarra conquista el mundo</div>
-          <div class="event-desc">La Fender Stratocaster y la Gibson Les Paul se vuelven íconos. Artistas como Hendrix, Santana y Van Halen la llevan a nuevos límites. Hoy es el instrumento más popular del planeta.</div>
+          <div class="event-desc">La Stratocaster y la Gibson Les Paul se vuelven íconos. Hendrix, Santana y Van Halen la llevan a nuevos límites. Hoy es el instrumento más popular del planeta.</div>
         </div>
       </div>
     </div>
@@ -276,5 +299,16 @@
     <p style="margin-top:6px">Curso: Guitarra — Código 80005 &nbsp;·&nbsp; Ruta A — Línea del tiempo</p>
   </div>
 </div>
+
+<script>
+  // Si una imagen falla, mostrar placeholder con emoji
+  document.querySelectorAll('.event-img').forEach(img => {
+    img.addEventListener('error', function() {
+      const wrap = this.closest('.event-img-wrap');
+      this.style.display = 'none';
+      wrap.innerHTML = '<div style="width:100%;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;"><span style="font-size:44px;opacity:0.4">🎸</span><p style="font-size:12px;color:#6b5a40;font-style:italic">Imagen histórica</p></div>';
+    });
+  });
+</script>
 </body>
 </html>
